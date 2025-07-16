@@ -122,7 +122,7 @@ export const fetchTransactionTableRows = async (
                     fromAccountNumber: null,
                     toAccountNumber: toAccount.accountNumber,
                     amount: Math.abs(item.toAmount),
-                    currencyCode: item.fromCurrency.code,
+                    currencyCode: item.toCurrency.code,
                     date: new Date(item.createdAt),
                     type: TransactionType.Deposit,
                     status: item.status,
