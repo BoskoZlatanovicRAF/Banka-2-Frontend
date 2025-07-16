@@ -30,7 +30,13 @@ export const editOrder = async (
     data: UpdateOrderRequest,
 ): Promise<Order> => {
     try {
-        const response = await api_exchange.put(`/orders/${id}`, data);
+        let response;
+        if(data.status === OrderStatus.ACTIVE) {
+            response = await api_exchange.put(`/orders/${id}/approve`);
+        }
+        else{
+            response = await api_exchange.put(`/orders/${id}/decline`);
+        }
 
         return response.data;
     }

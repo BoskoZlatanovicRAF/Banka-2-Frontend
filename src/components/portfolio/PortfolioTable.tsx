@@ -12,9 +12,11 @@ import {DataTablePagination} from "@/components/__common__/datatable/DataTablePa
 import {generatePortfolioColumns} from "@/components/portfolio/PortfolioTableColumns.tsx";
 import {Asset, AssetResponse} from "@/types/exchange/asset.ts";
 import {getAllAssets} from "@/api/exchange/asset.ts";
+import {useNavigate} from "react-router-dom";
 
 export default function PortfolioTable() {
 
+    const navigate = useNavigate();
     // current portfolio data
     const [portfolioData, setPortfolioData] = useState<Asset[]>([]);
 
@@ -62,7 +64,7 @@ export default function PortfolioTable() {
     };
 
     const columns = useMemo(() => {
-        return generatePortfolioColumns(setOpen, setSelectedRow);
+        return generatePortfolioColumns(setOpen, setSelectedRow, navigate);
     }, []);
 
     const table = useReactTable({

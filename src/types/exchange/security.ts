@@ -33,6 +33,7 @@ export interface Security {
     quotes: QuoteSimpleResponse[];
     createdAt: Date;
     modifiedAt: Date;
+    securityType?: SecurityType;
 }
 
 export interface QuoteSimpleResponse{

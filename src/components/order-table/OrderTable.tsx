@@ -11,7 +11,7 @@ import {editOrder, getAllOrders} from "@/api/exchange/order.ts";
 
 export default function OrderList() {
     const [search, setSearch] = useState<{ status: string }>({ status: "" });
-    const [orders, setOrders] = useState<Order[]>([]);
+    // const [orders, setOrders] = useState<Order[]>([]);
     const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -37,18 +37,13 @@ export default function OrderList() {
                 currentPage,
                 pageSize
             );
-            setOrders(ordersData.items);
+            setFilteredOrders(ordersData.items);
             setTotalPages(ordersData.totalPages);
         } catch (err) {
             setError("Failed to fetch orders");
         }
     };
 
-    useEffect(() => {
-        const start = (currentPage - 1) * pageSize;
-        const end = start + pageSize;
-        setFilteredOrders(orders.slice(start, end));
-    }, [currentPage, pageSize, orders]);
 
     const handleSearchChange = (field: keyof typeof search, value: string) => {
         setSearch(prevSearch => ({ ...prevSearch, [field]: value }));
@@ -93,7 +88,7 @@ export default function OrderList() {
             handlePut(order.id, OrderStatus.DECLINED);
         }
         return generateOrderColumns(handleApprove, handleDecline)}
-    , [orders]);
+    , [filteredOrders]);
 
     const table = useReactTable({
         data: filteredOrders,
